@@ -1,20 +1,23 @@
+
+Pruebalo en http://108.181.101.20:7779/debug! (Necesitas usar una clave de acceso para crear una cuenta)
+Espero que este proyecto ayude a alguien que quiera hacer un sistema multijugador
+
 # Kitty Kat Kats
 
-**Juego multijugador phygital** donde los jugadores cuidan gatos virtuales, compiten en minijuegos y suben en el ranking global.
+**Juego multijugador basura** donde los jugadores cuidan gatos virtuales, compiten en minijuegos y suben en el ranking global.
 
 ## Descripción del proyecto
-
-Kitty Kat Kats combina figuras coleccionables con un mundo virtual multijugador: los jugadores se registran con códigos, cuidan a sus gatos (estadísticas de hambre, energía, felicidad, limpieza) y compiten en minijuegos para ganar puntos y subir en el ranking público.
+Hola, soy zeep, este proyecto fue un prototipo de implementar multijugador desde 0 a un juego de turbowarp (scratch), no tengo el conocimiento de que arquitectura utilcie, me base en el multijugador de terraria para esto, adjunto documentacion (quiza generada por ia)
 
 ### Stack técnico
 
 - **Servidor**: Lógica implementada desde cero en C# (.NET 8)
-  - WebSocket (Fleck) para comunicación en tiempo real
+  - WebSocket para comunicación en tiempo real
   - HTTP server para la web y archivos estáticos
   - Base de datos SQLite con usuarios, gatos, items e inventarios
   - Sistema de paquetes propio (OpCodes) para autenticación, chat, ranking y gameplay
-
-- **Cliente**: Interfaz del juego desarrollada en **Turbowarp** (fork de Scratch optimizado)
+  - 
+- **Cliente**: Interfaz del juego desarrollada en **Turbowarp** (mod de Scratch)
 
 ### Sistema de paquetes
 
@@ -35,7 +38,7 @@ La lógica del servidor está basada en la arquitectura de servidores de **Terra
 
 ---
 
-## Cómo ejecutar
+## Cómo iniciar el servidor 
 
 ### Requisitos
 
@@ -73,4 +76,3 @@ La lógica del servidor está basada en la arquitectura de servidores de **Terra
 
 ---
 
-*Ideal para descripción en GitHub o sección de proyectos en curriculum.*
