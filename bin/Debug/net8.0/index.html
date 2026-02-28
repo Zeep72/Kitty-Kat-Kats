@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitty Kat Kats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --turquoise: #06bcd4;
+            --turquoise-dark: #04879a;
+            --turquoise-mid: #0ed1df;
+            --deep-blue: #022833;
+            --foam: #c8fbff;
+            --sky: #e4ffff;
+            --mint: #a0f2ff;
+            --sunny: #ffd36f;
+            --white: #f8ffff;
+            --shadow: 0 25px 45px rgba(2, 40, 51, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Fredoka', 'Nunito', system-ui, -apple-system, sans-serif;
+            background-color: var(--turquoise);
+            color: var(--deep-blue);
+            min-height: 100vh;
+            padding: 28px;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            z-index: 0;
+        }
+
+            body::before {
+            top: 40px;
+            left: 60px;
+            transform: rotate(8deg);
+            }
+
+            body::after {
+            bottom: 40px;
+            right: 60px;
+            transform: rotate(-6deg);
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .site-header {
+            background: linear-gradient(120deg, var(--white), var(--mint));
+            border-radius: 28px;
+            padding: 18px 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--deep-blue);
+        }
+
+        .logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 3px solid rgba(2, 40, 51, 0.2);
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+        }
+
+        nav a {
+            padding: 10px 14px;
+            border-radius: 18px;
+            transition: background-color 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(28, 202, 216, 0.15);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        button,
+        .btn {
+            border: none;
+            border-radius: 18px;
+            padding: 12px 20px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--deep-blue);
+            color: var(--white);
+            box-shadow: 0 10px 20px rgba(8, 60, 74, 0.25);
+        }
+
+        .btn-secondary {
+            background-color: var(--sunny);
+            color: var(--deep-blue);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        button:not(:disabled):hover {
+            transform: translateY(-1px);
+        }
+
+        .hero {
+            background: linear-gradient(140deg, var(--white), var(--foam));
+            border-radius: 32px;
+            padding: 42px;
+            margin-top: 28px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: var(--deep-blue);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(8, 60, 74, 0.75);
+            margin-bottom: 24px;
+        }
+
+        .hero-highlights {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .chip {
+            background-color: var(--sky);
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--deep-blue);
+        }
+
+        .cat-mascot {
+            background-color: var(--mint);
+            border-radius: 28px;
+            padding: 32px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cat-mascot::after {
+            content: "miauu";
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-weight: 700;
+            color: var(--turquoise);
+        }
+
+        .cat-mascot span {
+            font-size: 4.5rem;
+            display: inline-block;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            margin: 32px 0 20px;
+        }
+
+        .card-section {
+            background-color: var(--white);
+            border-radius: 26px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .section-heading h2 {
+            font-size: 1.8rem;
+        }
+
+        .game-frame-wrapper {
+            background-color: var(--sky);
+            border-radius: 28px;
+            padding: 18px;
+            border: 4px solid var(--deep-blue);
+        }
+
+        iframe {
+            width: 100%;
+            height: 420px;
+            border: none;
+            border-radius: 20px;
+            background-color: #062d36;
+        }
+
+        .ranking-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ranking-list li {
+            background-color: var(--sky);
+            border-radius: 18px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            color: var(--deep-blue);
+        }
+
+        .ranking-list span {
+            font-size: 0.95rem;
+            color: rgba(8, 60, 74, 0.75);
+            font-weight: 500;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .about-card {
+            background-color: var(--foam);
+            border-radius: 22px;
+            padding: 22px;
+        }
+
+        .about-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .cat-card {
+            background: linear-gradient(160deg, var(--sky), var(--mint));
+            border-radius: 24px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cat-icon {
+            font-size: 2.4rem;
+        }
+
+        .cat-card ul {
+            margin: 4px 0 0;
+            padding-left: 18px;
+            color: var(--deep-blue);
+            font-size: 0.95rem;
+        }
+
+        .cat-card li {
+            margin-bottom: 4px;
+        }
+
+        .chat-card {
+            background: linear-gradient(150deg, var(--white), var(--foam));
+            border-radius: 24px;
+            padding: 22px;
+            border: 2px solid rgba(2, 40, 51, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-lock {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(2, 40, 51, 0.85);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        .chat-lock.hidden {
+            display: none;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .chat-header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        #chatStatus {
+            font-size: 0.9rem;
+            color: rgba(2, 40, 51, 0.8);
+        }
+
+        .chat-tools {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chat-messages {
+            min-height: 220px;
+            max-height: 360px;
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 16px;
+            border: 2px solid rgba(2, 40, 51, 0.08);
+        }
+
+        .chat-message {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(2, 40, 51, 0.12);
+            border-left: 4px solid var(--turquoise-mid);
+        }
+
+        .chat-message strong {
+            display: block;
+            color: var(--turquoise-dark);
+            margin-bottom: 4px;
+        }
+
+        .chat-message span {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(2, 40, 51, 0.6);
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        .chat-empty {
+            text-align: center;
+            color: rgba(2, 40, 51, 0.6);
+            padding: 30px 10px;
+        }
+
+        .chat-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-inputs input {
+            flex: 1;
+            border-radius: 16px;
+            border: 2px solid rgba(2, 40, 51, 0.1);
+            padding: 14px;
+            font-size: 1rem;
+        }
+
+        .chat-inputs button {
+            min-width: 120px;
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .login-panel {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(3, 28, 36, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .login-panel.hidden {
+            display: none;
+        }
+
+        .panel-card {
+            width: min(960px, 95vw);
+            background-color: var(--white);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .panel-hero {
+            background-color: var(--sunny);
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            min-height: 100%;
+        }
+
+        .panel-hero h2 {
+            font-size: 2rem;
+            color: var(--deep-blue);
+        }
+
+        .connection-status {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-connecting {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #a66c00;
+        }
+
+        .status-connected {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #22651e;
+        }
+
+        .status-disconnected {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #a31813;
+        }
+
+        #messageBox {
+            min-height: 48px;
+            }
+
+        .message-box {
+            padding: 14px 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .message-box.success {
+            background-color: #2bb673;
+        }
+
+        .message-box.error {
+            background-color: #d64045;
+        }
+
+        .panel-forms {
+            padding: 36px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            background-color: var(--sky);
+            border-radius: 18px;
+            padding: 6px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            flex: 1;
+            border: none;
+            border-radius: 14px;
+            padding: 12px;
+            background: transparent;
+            font-weight: 700;
+            color: var(--deep-blue);
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background-color: var(--white);
+            box-shadow: inset 0 0 0 2px rgba(12, 83, 98, 0.1);
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--deep-blue);
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 2px solid rgba(12, 83, 98, 0.12);
+            font-size: 1rem;
+            font-family: inherit;
+            background-color: #f6feff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--turquoise-mid);
+            box-shadow: 0 0 0 3px rgba(28, 202, 216, 0.15);
+            background-color: var(--white);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 44px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background-color: var(--deep-blue);
+            color: var(--white);
+            border-radius: 999px;
+            width: 42px;
+            height: 42px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .panel-forms {
+                padding: 28px 24px 34px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="site-header">
+            <div class="logo">
+                <img src="/kitty-logo.png" alt="Logo Kitty Kat Kats">
+                <strong>Kitty Kat Kats</strong>
+        </div>
+            <nav>
+                <a href="#game">Juego</a>
+                <a href="#ranking">Ranking</a>
+                <a href="#about">Sobre Nosotros</a>
+                <a href="#cats">Gatos</a>
+                <a href="#chat-access">Chat</a>
+            </nav>
+            <div class="header-actions">
+                <button id="openLoginBtn" class="btn-secondary">Iniciar sesión</button>
+                <button id="playBtn" class="btn-primary">Entrar al mundo</button>
+            </div>
+        </header>
+
+        <section class="hero" id="inicio">
+            <div>
+                <h1>Phygital cats que viven entre juguetes y torneos</h1>
+                <p>Kitty Kat Kats une figuras coleccionables con un mundo virtual competitivo. Registra tu código, cuida a tu gato y compite en Turbowarop para subir al ranking público y al premio final.</p>
+                <div class="hero-highlights">
+                    <span class="chip">💬 Chat en vivo</span>
+                    <span class="chip">🏆 Ranking con premio real</span>
+                    <span class="chip">😺 6 gatos coleccionables</span>
+        </div>
+                <div class="header-actions">
+                    <button class="btn-primary" id="heroPlayBtn">Jugar ahora</button>
+                    <button class="btn-secondary" id="heroLoginBtn">Ya tengo cuenta</button>
+                </div>
+            </div>
+            <div class="cat-mascot">
+                <span>😺</span>
+                <p>Un gatito nuevo te espera</p>
+            </div>
+        </section>
+
+        <main>
+                      <section id="game" class="card-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Mundo Turbowarp</h2>
+                        <p>Tu puerta directa al minijuego principal. Se abrirá dentro de este iframe.</p>
+                    </div>
+                    <button class="btn-secondary" id="fullscreenBtn">Pantalla completa</button>
+                </div>
+                <div class="game-frame-wrapper">
+                    <iframe id="turbowaropFrame" src="about:blank" title="Turbowarop"></iframe>
+                </div>
+            </section
+
+            <section id="ranking" class="card-section">
+                <div class="section-heading">
+                    <h2>Ranking Top 10</h2>
+                    <button class="btn-secondary" id="refreshRanking">Actualizar</button>
+        </div>
+                <ol id="rankingList" class="ranking-list">
+                    <li><strong>Esperando datos...</strong><span>Conéctate para ver el top</span></li>
+                </ol>
+            </section>
+
+            <section id="about" class="card-section">
+                <div class="section-heading">
+                    <h2>Sobre Nosotros</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Misión</h3>
+                        <p>Crear entretenimiento accesible que conecte el juguete físico con experiencias digitales competitivas.</p>
+                </div>
+                    <div class="about-card">
+                        <h3>Visión</h3>
+                        <p>Ser la empresa mexicana referente en phygital entertainment con rankings públicos y premios reales.</p>
+        </div>
+                    <div class="about-card">
+                        <h3>Infraestructura</h3>
+                        <p>Servidor WebSocket, base SQLite y minijuegos en Turbowarp listos para pantallas escolares.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Modelo Híbrido</h3>
+                        <p>Venta de figuras, skins premium, códigos especiales y licenciamiento del sistema para otras escuelas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cats" class="card-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Conoce a los 6 gatos posibles</h2>
+                        <p>Cada uno tiene personalidad, habilidades y rareza propia. ¡Colecciónalos!</p>
+                </div>
+                </div>
+                <div id="catCards" class="cat-grid"></div>
+            </section>
+
+            <section id="chat-access" class="card-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Chat en vivo Kitty</h2>
+                        <p>Coordina torneos, comparte códigos y celebra victorias sin salir de esta página.</p>
+                    </div>
+                    <button class="btn-secondary" id="focusChatBtn">Ir al chat</button>
+                </div>
+                <div class="chat-card">
+                    <div class="chat-lock" id="chatLock">
+                        <p>😺 Inicia sesión para desbloquear el chat global.</p>
+                        <button class="btn-primary" id="chatLoginShortcut">Iniciar sesión</button>
+                    </div>
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <strong id="chatUserLabel">Modo invitado</strong>
+                            <span id="chatStatus">🔴 Sin conexión</span>
+                        </div>
+                        <div class="chat-tools">
+                            <button class="btn-secondary" id="chatHistoryBtn" disabled>Recargar historial</button>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-empty">
+                            💬 Conéctate para ver el historial compartido del salón.
+                        </div>
+                    </div>
+                    <form class="chat-inputs" id="chatForm">
+                        <input type="text" id="chatInput" placeholder="Escribe un mensaje..." autocomplete="off" disabled>
+                        <button type="submit" class="btn-primary" id="chatSendBtn" disabled>Enviar 🐾</button>
+            </form>
+        </div>
+            </section>
+        </main>
+
+        <footer>
+            © <span id="year"></span> Kitty Kat Kats · Turquesa y pura diversión felina
+        </footer>
+                </div>
+
+    <div class="login-panel hidden" id="loginPanel" aria-modal="true" role="dialog">
+        <div class="panel-card">
+            <button class="close-panel" id="closeLoginPanel" aria-label="Cerrar panel">✕</button>
+            <div class="panel-hero">
+                <h2>Inicia sesión o regístrate</h2>
+                <p>Conéctate para entrar al chat, minijuegos y administrar tus gatos.</p>
+                <div id="connectionStatus" class="connection-status status-connecting">
+                    🔄 Conectando al servidor...
+                </div>
+                <div id="messageBox"></div>
+                </div>
+            <div class="panel-forms">
+                <div class="tabs">
+                    <button class="tab active" id="loginTab">Iniciar Sesión</button>
+                    <button class="tab" id="registerTab">Registrarse</button>
+                </div>
+                <div id="loginForm" class="form-container active">
+                    <form id="loginFormElement" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginUsername">Usuario</label>
+                            <input type="text" id="loginUsername" autocomplete="username" placeholder="Tu usuario" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Contraseña</label>
+                            <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" required disabled>
+                            <span class="password-toggle" data-target="loginPassword">👁️</span>
+                        </div>
+                        <button type="submit" class="btn-primary" id="loginBtn" disabled>Entrar</button>
+            </form>
+                </div>
+                <div id="registerForm" class="form-container">
+                    <form id="registerFormElement" class="auth-form">
+                        <div class="form-group">
+                            <label for="registerUsername">Usuario</label>
+                            <input type="text" id="registerUsername" autocomplete="username" placeholder="Elige un nombre" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Contraseña</label>
+                            <input type="password" id="registerPassword" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required disabled>
+                            <span class="password-toggle" data-target="registerPassword">👁️</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPasswordConfirm">Confirmar Contraseña</label>
+                            <input type="password" id="registerPasswordConfirm" autocomplete="new-password" placeholder="Repite tu contraseña" required disabled>
+                            <span class="password-toggle" data-target="registerPasswordConfirm">👁️</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerCode">Código de Invitación</label>
+                            <input type="text" id="registerCode" maxlength="10" placeholder="10 caracteres" required disabled style="text-transform: uppercase;">
+                        </div>
+                        <button type="submit" class="btn-secondary" id="registerBtn" disabled>Crear cuenta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración del servidor WebSocket (desde ip.txt: puede ser "ws://host:port", "wss://host:port" o "host:port")
+        let SERVER_WS_URL = null;
+        let SERVER_HOST = window.location.hostname || "localhost";
+        let SERVER_WS_PORT = 3000;
+        const TURBOWAROP_URL = "/KittyKatKats.html";
+        
+        async function loadServerIP() {
+            try {
+                const response = await fetch("/ip.txt");
+                if (!response.ok) {
+                    throw new Error("No se pudo leer ip.txt");
+                }
+                const raw = (await response.text()).trim();
+                if (!raw || raw.length > 120) {
+                    console.warn("⚠️ ip.txt vacío o inválido");
+                    return;
+                }
+                if (raw.startsWith("ws://") || raw.startsWith("wss://")) {
+                    SERVER_WS_URL = raw;
+                    console.log("✅ Servidor desde ip.txt:", SERVER_WS_URL);
+                    return;
+                }
+                if (raw.includes(":")) {
+                    const idx = raw.lastIndexOf(":");
+                    SERVER_HOST = raw.substring(0, idx).trim();
+                    const portNum = parseInt(raw.substring(idx + 1).trim(), 10);
+                    if (!isNaN(portNum) && portNum > 0 && portNum < 65536) {
+                        SERVER_WS_PORT = portNum;
+                    }
+                } else {
+                    SERVER_HOST = raw;
+                }
+                SERVER_WS_URL = "ws://" + SERVER_HOST + ":" + SERVER_WS_PORT;
+                console.log("✅ Servidor desde ip.txt:", SERVER_WS_URL);
+            } catch (error) {
+                console.warn("⚠️ ip.txt no disponible:", error.message);
+                SERVER_HOST = window.location.hostname || "localhost";
+                SERVER_WS_URL = "ws://" + SERVER_HOST + ":" + SERVER_WS_PORT;
+            }
+        }
+
+        const catData = [
+            {
+                icon: "🗡️",
+                name: "LINK · Héroe Felino",
+                trait: "Valiente y curioso",
+                desc: "Explorador nato que nunca rechaza una mazmorra.",
+                extras: ["Traje del Héroe", "Escudo de Madera", "+5% defensa en minijuegos"]
+            },
+            {
+                icon: "👑",
+                name: "AMY · Princesa Rosa",
+                trait: "Elegante y optimista",
+                desc: "Ilumina todo con su encanto real y energía positiva.",
+                extras: ["Corona Real", "Vestido Real", "+10% felicidad ganada"]
+            },
+            {
+                icon: "🪄",
+                name: "CASPIAN · Mago Oscuro",
+                trait: "Misterioso e inteligente",
+                desc: "Domina tormentas mágicas con un parpadeo felino.",
+                extras: ["Gorro Arcano", "Túnica Vieja", "+5% energía máxima"]
+            },
+            {
+                icon: "🎭",
+                name: "MEW · Bufón Digital",
+                trait: "Caótico y cómico",
+                desc: "Glitcheado entre risas y eventos inesperados.",
+                extras: ["Gorro de Bufón", "Traje de Circo Digital", "Eventos positivos aleatorios"]
+            },
+            {
+                icon: "🧟",
+                name: "GATZ · Zombie Inofensivo",
+                trait: "Lento y adorable",
+                desc: "Solo quiere un abrazo... o un cerebro gourmet.",
+                extras: ["Maquillaje Tenebroso", "Piel Podrida", "Menos castigo por hambre"]
+            },
+            {
+                icon: "🐉",
+                name: "SUZIE · Dragona Guardiana",
+                trait: "Fuerte y leal",
+                desc: "Corazón de oro y aliento ardiente para proteger el ranking.",
+                extras: ["Cabeza Atraeburros", "Traje de Laguna", "Piel Escamosa · +10% XP"]
+            }
+        ];
+
+        const rankingList = document.getElementById("rankingList");
+        const catCards = document.getElementById("catCards");
+        const loginPanel = document.getElementById("loginPanel");
+        const openLoginTriggers = [document.getElementById("openLoginBtn"), document.getElementById("heroLoginBtn")];
+        const playTriggers = [document.getElementById("playBtn"), document.getElementById("heroPlayBtn")];
+        const closeLoginPanel = document.getElementById("closeLoginPanel");
+        const tabs = {
+            login: document.getElementById("loginTab"),
+            register: document.getElementById("registerTab")
+        };
+        const forms = {
+            login: document.getElementById("loginForm"),
+            register: document.getElementById("registerForm")
+        };
+        const turboFrame = document.getElementById("turbowaropFrame");
+        const focusChatBtn = document.getElementById("focusChatBtn");
+        const chatLock = document.getElementById("chatLock");
+        const chatLoginShortcut = document.getElementById("chatLoginShortcut");
+        const chatMessages = document.getElementById("chatMessages");
+        const chatForm = document.getElementById("chatForm");
+        const chatInput = document.getElementById("chatInput");
+        const chatSendBtn = document.getElementById("chatSendBtn");
+        const chatHistoryBtn = document.getElementById("chatHistoryBtn");
+        const chatStatus = document.getElementById("chatStatus");
+        const chatUserLabel = document.getElementById("chatUserLabel");
+
+        let ws = null;
+        let isConnected = false;
+        let pendingAction = null;
+        let rankingInterval = null;
+        let turboLoaded = false;
+        let isChatUnlocked = false;
+        const RANKING_REFRESH_MS = 5000;
+
+        const OPCODES = {
+            LOGIN: 1,
+            REGISTER: 2,
+            CHATMSG: 3,
+            CHATHISTORY: 4,
+            RANKING: 5,
+            PING: 6,
+            ERROR: 7,
+            OK: 8
+        };
+
+        function renderCatCards() {
+            catCards.innerHTML = catData.map(cat => `
+                <article class="cat-card">
+                    <span class="cat-icon">${cat.icon}</span>
+                    <strong>${cat.name}</strong>
+                    <span>${cat.trait}</span>
+                    <p>${cat.desc}</p>
+                    <ul>
+                        ${cat.extras.map(extra => `<li>${extra}</li>`).join("")}
+                    </ul>
+                </article>
+            `).join("");
+        }
+
+        function openPanel() {
+            loginPanel.classList.remove("hidden");
+        }
+
+        function closePanel() {
+            loginPanel.classList.add("hidden");
+        }
+
+        openLoginTriggers.forEach(btn => btn.addEventListener("click", () => {
+            openPanel();
+        }));
+
+        playTriggers.forEach(btn => btn.addEventListener("click", () => {
+            document.getElementById("game").scrollIntoView({ behavior: "smooth" });
+            openPanel();
+            setTimeout(() => {
+                loadTurbowarp(true);
+            }, 200);
+        }));
+
+        closeLoginPanel.addEventListener("click", closePanel);
+        loginPanel.addEventListener("click", (e) => {
+            if (e.target === loginPanel) {
+                closePanel();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closePanel();
+            }
+        });
+
+        tabs.login.addEventListener("click", () => switchTab("login"));
+        tabs.register.addEventListener("click", () => switchTab("register"));
+
+        function switchTab(tab) {
+            Object.values(tabs).forEach(btn => btn.classList.remove("active"));
+            Object.values(forms).forEach(form => form.classList.remove("active"));
+            tabs[tab].classList.add("active");
+            forms[tab].classList.add("active");
+        }
+
+        async function loadTurbowarp(force = false) {
+            if (!turboFrame) return;
+            if (turboLoaded && !force) return;
+            try {
+                const response = await fetch(TURBOWAROP_URL, { cache: "no-store" });
+                if (!response.ok) {
+                    throw new Error("No se pudo cargar Turbowarp");
+                }
+                const html = await response.text();
+                turboFrame.srcdoc = html;
+                turboLoaded = true;
+            } catch (error) {
+                console.error("Error al cargar Turbowarp:", error);
+            }
+        }
+
+        function focusChatSection() {
+            document.getElementById("chat-access").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function setChatControlsEnabled(enabled) {
+            if (!chatInput || !chatSendBtn || !chatHistoryBtn) return;
+            const allow = enabled && isChatUnlocked;
+            chatInput.disabled = !allow;
+            chatSendBtn.disabled = !allow;
+            chatHistoryBtn.disabled = !allow;
+        }
+
+        function updateChatStatus(text, emoji = "🔴") {
+            if (chatStatus) {
+                chatStatus.textContent = `${emoji} ${text}`;
+            }
+        }
+
+        function lockChat() {
+            if (chatLock) {
+                chatLock.classList.remove("hidden");
+            }
+            isChatUnlocked = false;
+            setChatControlsEnabled(false);
+            updateChatStatus("Sin conexión");
+        }
+
+        function unlockChat(username = "") {
+            if (chatLock) {
+                chatLock.classList.add("hidden");
+            }
+            if (chatUserLabel && username) {
+                chatUserLabel.textContent = username;
+            }
+            isChatUnlocked = true;
+            setChatControlsEnabled(isConnected);
+            updateChatStatus("Listo para chatear", "🟢");
+        }
+
+        function renderChatHistory(history) {
+            if (!chatMessages) return;
+            chatMessages.innerHTML = "";
+
+            if (history === "EMPTY") {
+                chatMessages.innerHTML = `<div class="chat-empty">No hay mensajes aún. ¡Escribe el primero!</div>`;
+                return;
+            }
+
+            const messages = history.split("||");
+            messages.forEach(msg => appendChatMessage(msg, { skipScroll: true }));
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function appendChatMessage(raw, options = {}) {
+            if (!chatMessages || !raw) return;
+
+            const parts = raw.split("|");
+            if (parts.length < 3) return;
+
+            const empty = chatMessages.querySelector(".chat-empty");
+            if (empty) empty.remove();
+
+            const element = document.createElement("div");
+            element.className = "chat-message";
+            element.innerHTML = `
+                <strong>🐾 ${escapeHtml(parts[0])}</strong>
+                <p>${escapeHtml(parts[1])}</p>
+                <span>${escapeHtml(parts[2])}</span>
+            `;
+            chatMessages.appendChild(element);
+
+            if (!options.skipScroll) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function startRankingUpdates() {
+            if (rankingInterval) {
+                return;
+            }
+            rankingInterval = setInterval(() => {
+                if (isConnected) {
+                    requestRanking({ silent: true });
+                }
+            }, RANKING_REFRESH_MS);
+        }
+
+        function stopRankingUpdates() {
+            if (!rankingInterval) {
+                return;
+            }
+            clearInterval(rankingInterval);
+            rankingInterval = null;
+        }
+
+
+        function connectWebSocket() {
+            const wsUrl = SERVER_WS_URL != null ? SERVER_WS_URL : `ws://${SERVER_HOST}:${SERVER_WS_PORT}`;
+            updateConnectionStatus("connecting");
+
+            try {
+                ws = new WebSocket(wsUrl);
+                ws.onopen = () => {
+                    isConnected = true;
+                    updateConnectionStatus("connected");
+                    enableForms();
+                    requestRanking({ silent: true });
+                    startRankingUpdates();
+                    updateChatStatus("Conectado al servidor", "🟢");
+                    setChatControlsEnabled(true);
+                };
+
+                ws.onmessage = (event) => handleServerMessage(event.data);
+
+                ws.onerror = () => {
+                    updateConnectionStatus("disconnected");
+                    updateChatStatus("Error de conexión", "🟠");
+                };
+
+                ws.onclose = () => {
+                    isConnected = false;
+                    updateConnectionStatus("disconnected");
+                    disableForms();
+                    stopRankingUpdates();
+                    setChatControlsEnabled(false);
+                    updateChatStatus("Reconectando...", "🟠");
+                    setTimeout(connectWebSocket, 3000);
+                };
+            } catch (err) {
+                console.error("Error conectando WebSocket:", err);
+                updateConnectionStatus("disconnected");
+            }
+        }
+
+        function updateConnectionStatus(status) {
+            const statusDiv = document.getElementById("connectionStatus");
+            statusDiv.className = "connection-status";
+            statusDiv.classList.add(`status-${status}`);
+
+            const messages = {
+                connecting: "🔄 Conectando al servidor...",
+                connected: "✅ Conectado al servidor",
+                disconnected: "❌ Desconectado. Reintentando..."
+            };
+
+            statusDiv.textContent = messages[status];
+        }
+
+        function setInputsDisabled(disabled) {
+            document.querySelectorAll(".auth-form input, .auth-form button[type='submit']").forEach(el => {
+                if (el.tagName === "BUTTON") {
+                    el.disabled = disabled;
+                } else {
+                    el.toggleAttribute("disabled", disabled);
+                }
+            });
+        }
+
+        function enableForms() {
+            setInputsDisabled(false);
+        }
+
+        function disableForms() {
+            setInputsDisabled(true);
+        }
+
+        function sendPacket(opcode, args = []) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                showMessage("❌ No hay conexión con el servidor", true);
+                return false;
+            }
+
+            const op = OPCODES[opcode];
+            if (typeof op === "undefined") {
+                console.warn("Opcode desconocido:", opcode);
+                return false;
+            }
+
+            const payload = [op, ...args].join("|");
+            ws.send(payload);
+            return true;
+        }
+
+        function handleServerMessage(data) {
+            const parts = data.split("|");
+            const opcode = parseInt(parts[0], 10);
+            const args = parts.slice(1);
+
+            if (opcode === OPCODES.OK) {
+                if (pendingAction === "login") {
+                    handleLoginSuccess(args);
+                } else if (pendingAction === "register") {
+                    handleRegisterSuccess(args);
+                }
+                return;
+            }
+
+            if (opcode === OPCODES.ERROR) {
+                showMessage(`❌ ${args[0] || "Error desconocido"}`, true);
+                pendingAction = null;
+                return;
+            }
+
+            if (opcode === OPCODES.RANKING) {
+                renderRanking(args);
+                return;
+            }
+
+            if (opcode === OPCODES.CHATMSG) {
+                appendChatMessage(args.join("|"));
+                return;
+            }
+
+            if (opcode === OPCODES.CHATHISTORY) {
+                renderChatHistory(args.join("|"));
+                return;
+            }
+
+            console.debug("Opcode no manejado:", opcode, args);
+        }
+
+        function renderRanking(entries) {
+            if (!entries.length || entries[0] === "EMPTY") {
+                rankingList.innerHTML = `<li><strong>Aún no hay jugadores</strong><span>Juega una partida para aparecer aquí</span></li>`;
+                return;
+            }
+
+            rankingList.innerHTML = entries.map((item, index) => {
+                const [name, points] = item.split("&");
+                const safeName = name || `Jugador ${index + 1}`;
+                const safePoints = points || "0";
+                return `<li>
+                    <strong>#${index + 1} · ${safeName}</strong>
+                    <span>${safePoints} pts</span>
+                </li>`;
+            }).join("");
+        }
+
+        function handleLoginSuccess(args) {
+            if (args.length >= 3) {
+                const [userId, username, points] = args;
+                localStorage.setItem("userId", userId);
+                localStorage.setItem("username", username);
+                localStorage.setItem("points", points || "0");
+                localStorage.setItem("userPassword", document.getElementById("loginPassword").value);
+
+                showMessage(`✅ Bienvenido ${username}. El chat ya está listo.`, false);
+                unlockChat(username);
+                requestRanking({ silent: true });
+                requestChatHistory({ silent: true });
+                closePanel();
+                pendingAction = null;
+            } else {
+                showMessage("⚠️ Respuesta incompleta del servidor", true);
+                pendingAction = null;
+            }
+        }
+
+        function handleRegisterSuccess(args) {
+            showMessage(`✅ ${args[0] || "Usuario creado exitosamente"}`, false);
+            pendingAction = null;
+            document.getElementById("registerFormElement").reset();
+            switchTab("login");
+        }
+
+        function togglePassword(targetId) {
+            const input = document.getElementById(targetId);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
+        document.querySelectorAll(".password-toggle").forEach(toggle => {
+            toggle.addEventListener("click", () => {
+                togglePassword(toggle.dataset.target);
+            });
+        });
+
+        function showMessage(text, isError) {
+            const box = document.getElementById("messageBox");
+            box.innerHTML = `<div class="message-box ${isError ? "error" : "success"}">${text}</div>`;
+            setTimeout(() => {
+                box.innerHTML = "";
+            }, 4000);
+        }
+
+        document.getElementById("loginFormElement").addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!isConnected) {
+                showMessage("❌ No hay conexión con el servidor", true);
+                return;
+            }
+
+            const username = document.getElementById("loginUsername").value.trim();
+            const password = document.getElementById("loginPassword").value;
+
+            if (!username || !password) {
+                showMessage("❌ Completa todos los campos", true);
+                return;
+            }
+
+            pendingAction = "login";
+            sendPacket("LOGIN", [username, password]);
+        });
+
+        document.getElementById("registerFormElement").addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!isConnected) {
+                showMessage("❌ No hay conexión con el servidor", true);
+                return;
+            }
+
+            const username = document.getElementById("registerUsername").value.trim();
+            const password = document.getElementById("registerPassword").value;
+            const confirm = document.getElementById("registerPasswordConfirm").value;
+            const code = document.getElementById("registerCode").value.trim().toUpperCase();
+
+            if (!username || !password || !confirm || !code) {
+                showMessage("❌ Completa todos los campos", true);
+                return;
+            }
+
+            if (password !== confirm) {
+                showMessage("❌ Las contraseñas no coinciden", true);
+                return;
+            }
+
+            if (code.length !== 10) {
+                showMessage("❌ El código debe tener 10 caracteres", true);
+                return;
+            }
+
+            pendingAction = "register";
+            sendPacket("REGISTER", [username, password, code]);
+        });
+
+        document.getElementById("registerCode").addEventListener("input", (event) => {
+            event.target.value = event.target.value.toUpperCase();
+        });
+
+        document.getElementById("refreshRanking").addEventListener("click", () => {
+            requestRanking();
+        });
+
+        if (chatForm) {
+            chatForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                if (!isConnected || !isChatUnlocked) {
+                    showMessage("❌ Debes iniciar sesión para enviar mensajes", true);
+                    return;
+                }
+                const text = chatInput.value.trim();
+                if (!text) return;
+                sendPacket("CHATMSG", [text]);
+                chatInput.value = "";
+            });
+        }
+
+        if (chatHistoryBtn) {
+            chatHistoryBtn.addEventListener("click", () => requestChatHistory());
+        }
+
+        if (focusChatBtn) {
+            focusChatBtn.addEventListener("click", focusChatSection);
+        }
+
+        if (chatLoginShortcut) {
+            chatLoginShortcut.addEventListener("click", () => {
+                openPanel();
+                focusChatSection();
+            });
+        }
+
+        function requestRanking(options = {}) {
+            const { silent = false } = options;
+            if (!isConnected) {
+                if (!silent) {
+                    showMessage("⏳ Espera la conexión para ver el ranking", true);
+                }
+                return;
+            }
+
+            sendPacket("RANKING");
+        }
+
+        function requestChatHistory(options = {}) {
+            const { silent = false } = options;
+            if (!isConnected || !isChatUnlocked) {
+                if (!silent) {
+                    showMessage("❌ Necesitas iniciar sesión para ver el chat", true);
+                }
+                return;
+            }
+            sendPacket("CHATHISTORY");
+        }
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+        lockChat();
+        loadTurbowarp();
+        renderCatCards();
+        
+        // Cargar la IP del servidor y luego conectar
+        (async () => {
+            await loadServerIP();
+            connectWebSocket();
+        })();
+    </script>
+</body>
+</html>

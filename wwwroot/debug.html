@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug — Kitty Kat Kats</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            font-size: 13px;
+        }
+        a { color: #6af; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        header {
+            padding: 10px 14px;
+            background: #252525;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        header h1 { font-size: 1.1rem; font-weight: 600; }
+        .header-links { display: flex; gap: 12px; }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (min-width: 1000px) {
+            .container { grid-template-columns: 280px 1fr 280px; }
+        }
+        .panel {
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 420px;
+        }
+        .panel-head {
+            padding: 8px 12px;
+            background: #2d2d2d;
+            border-bottom: 1px solid #333;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .panel-head span { color: #888; font-weight: 400; font-size: 0.9rem; }
+        .panel-body {
+            flex: 1;
+            overflow: auto;
+            padding: 8px;
+        }
+        .panel-body::-webkit-scrollbar { width: 6px; }
+        .panel-body::-webkit-scrollbar-track { background: #1a1a1a; }
+        .panel-body::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+        .game-wrap {
+            grid-column: 1 / -1;
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 10px;
+            min-height: 380px;
+        }
+        .game-wrap h2 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #888;
+        }
+        .game-wrap iframe {
+            width: 100%;
+            height: 360px;
+            border: none;
+            border-radius: 4px;
+            background: #0d0d0d;
+        }
+        @media (min-width: 1000px) {
+            .game-wrap { grid-column: 2; grid-row: 1 / 3; min-height: 520px; }
+            .game-wrap iframe { height: 480px; }
+        }
+        .code-item {
+            padding: 4px 6px;
+            margin-bottom: 4px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+        .log-item {
+            padding: 4px 6px;
+            margin-bottom: 4px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border-left: 3px solid #444;
+        }
+        .log-item .t { color: #6a6; margin-right: 6px; }
+        .log-item .op { color: #f96; }
+        .chat-item {
+            padding: 6px 8px;
+            margin-bottom: 6px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .chat-item strong { color: #6af; }
+        .client-item {
+            padding: 4px 8px;
+            margin-bottom: 4px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .client-item.auth { border-left: 3px solid #6a6; }
+        .client-item.anon { border-left: 3px solid #888; }
+        .btn {
+            padding: 4px 10px;
+            border: 1px solid #555;
+            background: #333;
+            color: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: inherit;
+        }
+        .btn:hover { background: #444; }
+        .stats { color: #888; font-size: 0.8rem; }
+        .empty { color: #555; padding: 12px; text-align: center; }
+        .auth-panel .panel-body { max-height: 360px; }
+        .auth-tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+        .auth-tabs button { flex: 1; padding: 6px; border: 1px solid #444; background: #2d2d2d; color: #ccc; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+        .auth-tabs button.active { background: #333; border-color: #6af; color: #e0e0e0; }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .auth-form label { display: block; margin-top: 8px; margin-bottom: 2px; color: #aaa; font-size: 0.8rem; }
+        .auth-form input { width: 100%; padding: 6px 8px; border: 1px solid #444; background: #1e1e1e; color: #e0e0e0; border-radius: 4px; font-size: 0.85rem; margin-bottom: 4px; }
+        .auth-form input:focus { outline: none; border-color: #6af; }
+        .auth-form button[type="submit"] { width: 100%; margin-top: 10px; padding: 8px; background: #333; border: 1px solid #6af; color: #6af; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+        .auth-form button[type="submit"]:hover { background: #3a3a3a; }
+        .auth-msg { margin-top: 10px; padding: 8px; border-radius: 4px; font-size: 0.85rem; display: none; }
+        .auth-msg.show { display: block; }
+        .auth-msg.ok { background: #1a3a1a; border: 1px solid #6a6; color: #9f9; }
+        .auth-msg.err { background: #3a1a1a; border: 1px solid #a66; color: #f99; }
+        .auth-ws { font-size: 0.75rem; color: #666; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐛 Debug — Kitty Kat Kats</h1>
+        <div class="header-links">
+            <a href="/">← Inicio</a>
+            <span class="stats" id="stats">—</span>
+        </div>
+    </header>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-head">
+                Códigos (invitación)
+                <span id="codesCount">0</span>
+                <button class="btn" id="btnCodes">Actualizar</button>
+                <button class="btn" id="btnGen" title="Generar 5 códigos">+5</button>
+            </div>
+            <div class="panel-body" id="codesList">
+                <div class="empty">Cargando…</div>
+            </div>
+        </div>
+        <div class="game-wrap">
+            <h2>Turbowarp</h2>
+            <iframe id="gameFrame" src="/KittyKatKats.html" title="Juego"></iframe>
+        </div>
+        <div class="panel">
+            <div class="panel-head">
+                Log (mensajes al servidor)
+                <span id="logCount">0</span>
+                <button class="btn" id="btnLog">Actualizar</button>
+            </div>
+            <div class="panel-body" id="logList">
+                <div class="empty">Cargando…</div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-head">
+                Chat
+                <span id="chatCount">0</span>
+                <button class="btn" id="btnChat">Actualizar</button>
+            </div>
+            <div class="panel-body" id="chatList">
+                <div class="empty">Cargando…</div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-head">
+                Clientes conectados
+                <span id="clientsCount">0</span>
+                <button class="btn" id="btnClients">Actualizar</button>
+            </div>
+            <div class="panel-body" id="clientsList">
+                <div class="empty">Cargando…</div>
+            </div>
+        </div>
+        <div class="panel auth-panel">
+            <div class="panel-head">Cuenta (crear usuarios)</div>
+            <div class="panel-body">
+                <div class="auth-ws" id="authWsStatus">Conectando WebSocket…</div>
+                <div class="auth-tabs">
+                    <button type="button" class="active" data-tab="login">Iniciar sesión</button>
+                    <button type="button" data-tab="register">Registrarse</button>
+                </div>
+                <form id="formLogin" class="auth-form active">
+                    <label>Usuario</label>
+                    <input type="text" id="loginUser" placeholder="Usuario" autocomplete="username">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPass" placeholder="Contraseña" autocomplete="current-password">
+                    <button type="submit">Entrar</button>
+                </form>
+                <form id="formRegister" class="auth-form">
+                    <label>Usuario</label>
+                    <input type="text" id="regUser" placeholder="Nombre de usuario" autocomplete="username">
+                    <label>Contraseña</label>
+                    <input type="password" id="regPass" placeholder="Contraseña" autocomplete="new-password">
+                    <label>Confirmar contraseña</label>
+                    <input type="password" id="regPass2" placeholder="Repetir contraseña" autocomplete="new-password">
+                    <label>Código de invitación (10 caracteres)</label>
+                    <input type="text" id="regCode" placeholder="Código" maxlength="10" style="text-transform: uppercase;">
+                    <button type="submit">Crear cuenta</button>
+                </form>
+                <div id="authMsg" class="auth-msg"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const base = window.location.origin || '';
+        function api(path) { return base + '/debug/' + path; }
+        function fetchJson(path) { return fetch(api(path)).then(r => r.json()); }
+
+        function renderCodes(data) {
+            const el = document.getElementById('codesList');
+            document.getElementById('codesCount').textContent = (data?.count ?? 0);
+            if (!data?.codes?.length) { el.innerHTML = '<div class="empty">Sin códigos sin canjear</div>'; return; }
+            el.innerHTML = data.codes.map(c => `<div class="code-item">${escapeHtml(c)}</div>`).join('');
+        }
+        function renderLog(data) {
+            const el = document.getElementById('logList');
+            document.getElementById('logCount').textContent = (data?.count ?? 0);
+            if (!data?.log?.length) { el.innerHTML = '<div class="empty">Ningún mensaje aún</div>'; return; }
+            el.innerHTML = data.log.slice().reverse().map(x =>
+                `<div class="log-item"><span class="t">${escapeHtml(x.time)}</span><span class="op">${escapeHtml(x.opcode)}</span> ${escapeHtml(x.args || '')}</div>`
+            ).join('');
+        }
+        function renderChat(data) {
+            const el = document.getElementById('chatList');
+            document.getElementById('chatCount').textContent = (data?.count ?? 0);
+            if (!data?.messages?.length) { el.innerHTML = '<div class="empty">Sin mensajes</div>'; return; }
+            el.innerHTML = data.messages.map(msg => {
+                const parts = (msg || '').split('|');
+                const user = parts[0] || '?';
+                const text = parts[1] || '';
+                const time = parts[2] || '';
+                return `<div class="chat-item"><strong>${escapeHtml(user)}</strong> ${escapeHtml(text)}<br><span class="stats">${escapeHtml(time)}</span></div>`;
+            }).join('');
+        }
+        function renderClients(data) {
+            const el = document.getElementById('clientsList');
+            document.getElementById('clientsCount').textContent = (data?.count ?? 0);
+            if (!data?.clients?.length) { el.innerHTML = '<div class="empty">Nadie conectado</div>'; return; }
+            el.innerHTML = data.clients.map(c =>
+                `<div class="client-item ${c.authenticated ? 'auth' : 'anon'}">${escapeHtml(c.username || '(anon)')} ${c.authenticated ? '✓' : ''}</div>`
+            ).join('');
+        }
+        function escapeHtml(t) {
+            if (t == null) return '';
+            const d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        function refreshStats() {
+            fetchJson('stats').then(d => {
+                document.getElementById('stats').textContent = `Clientes: ${d.clientsConnected ?? 0} · Chat: ${d.chatMessagesCount ?? 0} · Log: ${d.serverLogCount ?? 0}`;
+            }).catch(() => { document.getElementById('stats').textContent = 'Error'; });
+        }
+        function refreshAll() {
+            fetchJson('codes').then(renderCodes).catch(() => renderCodes({ codes: [], count: 0 }));
+            fetchJson('log').then(renderLog).catch(() => renderLog({ log: [], count: 0 }));
+            fetchJson('chat').then(renderChat).catch(() => renderChat({ messages: [], count: 0 }));
+            fetchJson('clients').then(renderClients).catch(() => renderClients({ clients: [], count: 0 }));
+            refreshStats();
+        }
+        document.getElementById('btnCodes').addEventListener('click', () => fetchJson('codes').then(renderCodes));
+        document.getElementById('btnLog').addEventListener('click', () => fetchJson('log').then(renderLog));
+        document.getElementById('btnChat').addEventListener('click', () => fetchJson('chat').then(renderChat));
+        document.getElementById('btnClients').addEventListener('click', () => fetchJson('clients').then(renderClients));
+        document.getElementById('btnGen').addEventListener('click', () => {
+            fetch(api('generatecodes?n=5'), { method: 'POST' }).then(() => fetchJson('codes').then(renderCodes)).then(refreshStats);
+        });
+        refreshAll();
+        setInterval(refreshAll, 8000);
+
+        (function() {
+            const OPCODES = { LOGIN: 1, REGISTER: 2, CHATMSG: 3, CHATHISTORY: 4, RANKING: 5, PING: 6, ERROR: 7, OK: 8 };
+            let debugWs = null;
+            let debugWsUrl = null;
+            let pendingAuth = null;
+            const statusEl = document.getElementById('authWsStatus');
+            const msgEl = document.getElementById('authMsg');
+
+            function setMsg(text, isError) {
+                msgEl.textContent = text || '';
+                msgEl.className = 'auth-msg show ' + (isError ? 'err' : 'ok');
+                msgEl.style.display = text ? 'block' : 'none';
+                if (text) setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'auth-msg'; msgEl.style.display = 'none'; }, 5000);
+            }
+            function setStatus(t) { if (statusEl) statusEl.textContent = t; }
+            function sendAuth(op, args) {
+                if (!debugWs || debugWs.readyState !== WebSocket.OPEN) { setMsg('Sin conexión al servidor', true); return; }
+                const payload = [OPCODES[op], ...(args || [])].join('|');
+                debugWs.send(payload);
+            }
+            function connectDebugWs() {
+                fetch((window.location.origin || '') + '/ip.txt').then(r => r.text()).then(raw => {
+                    const t = (raw || '').trim();
+                    if (!t) { setStatus('ip.txt vacío'); return; }
+                    if (t.startsWith('ws://') || t.startsWith('wss://')) { debugWsUrl = t; } else {
+                        let host = t, port = 3000;
+                        if (t.includes(':')) { const i = t.lastIndexOf(':'); host = t.substring(0, i).trim(); const p = parseInt(t.substring(i + 1).trim(), 10); if (!isNaN(p)) port = p; }
+                        debugWsUrl = 'ws://' + host + ':' + port;
+                    }
+                    setStatus('Conectando…');
+                    debugWs = new WebSocket(debugWsUrl);
+                    debugWs.onopen = () => setStatus('Conectado');
+                    debugWs.onclose = () => { setStatus('Desconectado'); setTimeout(connectDebugWs, 3000); };
+                    debugWs.onerror = () => setStatus('Error');
+                    debugWs.onmessage = function(ev) {
+                        const parts = (ev.data || '').split('|');
+                        const op = parseInt(parts[0], 10);
+                        const args = parts.slice(1);
+                        if (op === OPCODES.OK) {
+                            if (pendingAuth === 'login') setMsg('Sesión iniciada correctamente', false);
+                            else if (pendingAuth === 'register') setMsg('Cuenta creada. Ya puedes iniciar sesión.', false);
+                            pendingAuth = null;
+                        } else if (op === OPCODES.ERROR) {
+                            setMsg('Error: ' + (args[0] || 'Desconocido'), true);
+                            pendingAuth = null;
+                        }
+                    };
+                }).catch(() => setStatus('No se pudo cargar ip.txt'));
+            }
+            document.querySelectorAll('.auth-tabs button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.auth-tabs button').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById(this.dataset.tab === 'login' ? 'formLogin' : 'formRegister').classList.add('active');
+                });
+            });
+            document.getElementById('formLogin').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const user = (document.getElementById('loginUser').value || '').trim();
+                const pass = document.getElementById('loginPass').value;
+                if (!user || !pass) { setMsg('Usuario y contraseña obligatorios', true); return; }
+                pendingAuth = 'login';
+                sendAuth('LOGIN', [user, pass]);
+            });
+            document.getElementById('formRegister').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const user = (document.getElementById('regUser').value || '').trim();
+                const pass = document.getElementById('regPass').value;
+                const pass2 = document.getElementById('regPass2').value;
+                let code = (document.getElementById('regCode').value || '').trim().toUpperCase();
+                if (!user || !pass || !pass2 || !code) { setMsg('Completa todos los campos', true); return; }
+                if (pass !== pass2) { setMsg('Las contraseñas no coinciden', true); return; }
+                if (code.length !== 10) { setMsg('El código debe tener 10 caracteres', true); return; }
+                pendingAuth = 'register';
+                sendAuth('REGISTER', [user, pass, code]);
+            });
+            document.getElementById('regCode').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
+            connectDebugWs();
+        })();
+    </script>
+</body>
+</html>

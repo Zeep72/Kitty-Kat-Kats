@@ -1,0 +1,100 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\KittyServer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|c:\\users\\user\\source\\repos\\kittyserver\\packet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|solutionrelative:packet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|c:\\users\\user\\source\\repos\\kittyserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|c:\\users\\user\\source\\repos\\kittyserver\\kittyserver.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|solutionrelative:kittyserver.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|c:\\users\\user\\source\\repos\\kittyserver\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{94D6B4C7-E7F2-5DA7-45C3-DEC9087714DB}|KittyServer.csproj|solutionrelative:index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "KittyServer",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\KittyServer\\KittyServer.csproj",
+              "RelativeDocumentMoniker": "KittyServer.csproj",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\KittyServer\\KittyServer.csproj",
+              "RelativeToolTip": "KittyServer.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-02T23:01:36Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Packet.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\KittyServer\\Packet.cs",
+              "RelativeDocumentMoniker": "Packet.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\KittyServer\\Packet.cs",
+              "RelativeToolTip": "Packet.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAkwLgAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T00:29:17.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\KittyServer\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\KittyServer\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAANADAAAAAAAAAADwv+EDAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T01:29:41.243Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\KittyServer\\index.html",
+              "RelativeDocumentMoniker": "index.html",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\KittyServer\\index.html",
+              "RelativeToolTip": "index.html",
+              "ViewState": "AgIAADkDAAAAAAAAAAAkwFAFAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-12-10T01:22:16.557Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

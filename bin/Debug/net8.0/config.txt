@@ -1,0 +1,19 @@
+# Kitty Kat Kats - Configuración del servidor
+# Coloca este archivo en la carpeta raíz del proyecto (junto a index.html) o junto al .exe al publicar.
+# Líneas que empiezan con # se ignoran. Formato: Clave=Valor
+
+# IP que se anuncia (vacío = detectar automáticamente con GetLocalIP)
+ServerIP=
+
+# Puerto del WebSocket (predeterminado 3000)
+WebSocketPort=3000
+
+# Puerto HTTP para servir la web (predeterminado 8080)
+HttpPort=8080
+
+# true = la web usará wss:// (detrás de proxy HTTPS). false = ws://
+# Si en Linux usas nginx con HTTPS, pon UseHttps=true para que la página conecte por WSS.
+UseHttps=false
+
+# Nota: El error "required authorization headers" al acceder al puerto 8080 suele venir
+# del proxy (nginx/apache) o del firewall, no de este servidor. Revisa la config del proxy.

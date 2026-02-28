@@ -1,0 +1,25 @@
+# Kitty Kat Kats - Configuración del servidor
+# Coloca este archivo junto a index.html o junto al .exe al publicar. Formato: Clave=Valor
+
+# IP que se anuncia (vacío = detectar automáticamente)
+ServerIP=
+
+# Puerto del WebSocket (predeterminado 3000)
+WebSocketPort=3000
+
+# Puerto HTTP para la web (ej. 7779). Si cambias esto, reinicia el servidor.
+HttpPort=7779
+
+# Carpeta donde están index.html, ip.txt, debug.html, etc.
+# En Linux/VPS pon la ruta absoluta si obtienes "Not Found" (ej. /var/www/kitty o /home/user/KittyServer).
+# Vacío = buscar en la carpeta del proyecto y luego en la del .exe.
+WebRoot=
+
+# true = la web usará wss:// (solo si usas proxy HTTPS). false = ws://
+UseHttps=false
+
+# --- HTTPS ---
+# Este servidor solo escucha HTTP. Para usar HTTPS:
+# 1) Pon un proxy (nginx, Caddy) que escuche en 443 con tu certificado.
+# 2) El proxy redirige a este servidor en HTTP (ej. puerto 7779).
+# 3) En config pon UseHttps=true para que la página conecte por wss:// al proxy.
